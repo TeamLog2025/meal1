@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>서울시교육청 학교 급식 정보</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/suit-webfont@latest/suit.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h2>선린인터넷고등학교 오늘의 급식</h2>
+
+    <div id="result">불러오는 중...</div>
+
+    <div class="form-section">
+        <label for="mealDate">다른 날짜 급식 보기</label>
+        <input type="date" id="mealDate">
+    </div>
+
+    <script>
+        function getToday() {
+        const now = new Date ();
+        return now.toISOString().slice(0,10);
+        }
+
+        function formatDate(date) {
+        return date.replace(/-/g, '');
+        }
+
+        function getMeal(date) {
+        const officeCode = "B10";
+        const schoolCode = "7010536";
+        const mealDate = formatDate(date);
+        const apiKey = "3ea72fbccb074e91aa2122bdff46cd43";
+
+        const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${apiKey}&Type=json&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${mealDate}`;
+
+        document.getElementById('result').innerText = '불러오는 중...';
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            console.log(data);
+
+            if (!data.mealServiceDietInfo || !data.mealServiceDietInfo[1] || !data.mealServiceDietInfo[1].row) {
+                document.getElementById('result').innerText = '선택한 날짜에 급식 정보가 없습니다.';
+                return;
+            }
+
+            const meals = data.mealServiceDietInfo[1].row[0].DDISH_NM;
+            document.getElementById('result').innerHTML = meals;
+
+            })
+            .catch(error => {
+            console.error(error);
+            document.getElementById('result').innerText = '급식 정보를 불러오지 못했습니다.';
+            });
+        }
+
+        window.onload = function () {
+        const today = getToday();
+        document.getElementById('mealDate').value = today;
+        getMeal(today);
+
+        document.getElementById('mealDate').addEventListener('change', function () {
+            getMeal(this.value);
+        });
+        };
+    </script>
+</body>
+
+
+</html>

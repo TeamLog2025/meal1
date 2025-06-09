@@ -1,0 +1,64 @@
+/* style.css - VS Code 느낌 */
+
+body {
+    font-family: 'Fira Code', monospace;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    margin: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* 제목 */
+h2 {
+    text-align: center;
+    color: #569CD6;
+    font-size: 26px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+/* 급식 결과 영역 */
+#result {
+    background-color: #252526;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+    white-space: pre-line;
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #CE9178; /* VS Code의 문자열 느낌 색상 */
+}
+
+/* 날짜 선택 영역 */
+.form-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #9CDCFE;
+}
+
+/* 날짜 입력 */
+input[type="date"] {
+    background-color: #3c3c3c;
+    border: 1px solid #555;
+    color: #d4d4d4;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 6px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input[type="date"]:hover,
+input[type="date"]:focus {
+    border-color: #569CD6;
+}
